@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Multi PDF RAG Assistant</title>
+
+</head>
+
+
+<body>
+
+    <h1>Multi-PDF RAG Assistant</h1>
+
+
+    <!-- ============================= -->
+    <!-- PDF UPLOAD -->
+    <!-- ============================= -->
+
+    <h2>Upload PDF Documents</h2>
+
+    <form
+        action="/upload"
+        method="POST"
+        enctype="multipart/form-data"
+    >
+
+        <input
+            type="file"
+            name="files"
+            multiple
+            accept=".pdf"
+            required
+        >
+
+        <br><br>
+
+        <button type="submit">
+            Upload PDFs
+        </button>
+
+    </form>
+
+
+    <hr>
+
+
+    <!-- ============================= -->
+    <!-- QUESTION -->
+    <!-- ============================= -->
+
+    <h2>Ask a Question</h2>
+
+    <form
+        action="/ask"
+        method="POST"
+    >
+
+        <input
+            type="text"
+            name="question"
+            placeholder="Ask something about your PDFs..."
+            value="{{ question or '' }}"
+            style="width: 500px;"
+            required
+        >
+
+        <button type="submit">
+            Ask
+        </button>
+
+    </form>
+
+
+    <!-- ============================= -->
+    <!-- ANSWER -->
+    <!-- ============================= -->
+
+    {% if answer %}
+
+        <hr>
+
+        <h2>AI Answer</h2>
+
+        <div>
+
+            {{ answer }}
+
+        </div>
+
+    {% endif %}
+
+
+</body>
+
+</html>
