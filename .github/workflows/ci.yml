@@ -1,9 +1,11 @@
+```yaml
 name: RAG CI/CD
 
 on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
@@ -17,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -43,11 +46,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set Docker image name
+        run: |
+          echo "IMAGE_NAME=ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
+
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/multi-pdf-rag:latest .
+          docker build -t "$IMAGE_NAME:latest" .
 
       - name: Push Docker image to GHCR
         if: github.event_name == 'push'
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/multi-pdf-rag:latest
+          docker push "$IMAGE_NAME:latest"
+```
