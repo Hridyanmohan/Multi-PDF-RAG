@@ -1,4 +1,4 @@
-```yaml
+
 name: RAG CI/CD
 
 on:
@@ -58,4 +58,4 @@ jobs:
         if: github.event_name == 'push'
         run: |
           docker push "$IMAGE_NAME:latest"
-```
+
